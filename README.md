@@ -10,3 +10,4 @@
 |[Lab5](Labs/Lab5/)   |
 |[Lab6](Labs/Lab6/)   |
 |[Lab7](Labs/Lab7/)   |
+|[Lab8](Labs/Lab8/)   |
