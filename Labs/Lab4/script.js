@@ -115,6 +115,6 @@ function Run(){ //obtains the conrers of the box by creating a function which se
         bottomRight: bottomRightPoint
     }
 
-    console.log("Bounding boc computed for russell_lamson@tamu.edu: ");
+    console.log("Bounding box computed for russell_lamson@tamu.edu: ");
     console.log(boundingBox);
 }
