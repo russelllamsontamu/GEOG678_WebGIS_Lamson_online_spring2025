@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>College Station Weekly Temp Forcast</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style>
+        svg {
+      font: 10px sans-serif;
+    }
+
+    .line {
+      fill: none;
+      stroke-width: 4;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .line1 {
+      stroke: steelblue;
+    }
+
+    .line2 {
+      stroke: tomato;
+    }
+
+    </style>
+  </head>
+  <body>
+    <svg width="700" height="400"></svg>
+        <script>
+
+        const days = ["SAT1", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT2"];
+
+        const data1 = [
+            { x: "SAT1", y: 82 },
+            { x: "SUN", y: 81 },
+            { x: "MON", y: 81 },
+            { x: "TUE", y: 70 },
+            { x: "WED", y: 77 },
+            { x: "THU", y: 78 },
+            { x: "FRI", y: 79 },
+            { x: "SAT2", y: 80 }];
+
+        const data2 = [
+            { x: "SAT1", y: 67 },
+            { x: "SUN", y: 59 },
+            { x: "MON", y: 50 },
+            { x: "TUE", y: 47 },
+            { x: "WED", y: 51 },
+            { x: "THU", y: 60 },
+            { x: "FRI", y: 66 },
+            { x: "SAT2", y: 66 }];
+
+        const svg = d3.select("svg"),
+            margin = { top: 40, right: 30, bottom: 80, left: 40 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
+
+        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+        svg.append("text")
+        .attr("x", svg.attr("width") / 2)
+        .attr("y", 16)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("College Station Weekly Temperature Forecast");
+
+        const x = d3.scaleBand()
+            .domain(days)
+            .range([0, width])
+
+        const y = d3.scaleLinear()
+            .domain([0, d3.max([...data1, ...data2], d => d.y)])
+            .range([height, 0]);
+
+        const line = d3.line()
+            .x(d => x(d.x) + x.bandwidth() / 2)
+            .y(d => y(d.y));
+
+        g.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickFormat(d => d.startsWith("SAT") ? "SAT" : d));
+
+        g.append("g")
+            .call(d3.axisLeft(y));
+
+        g.append("path")
+            .datum(data1)
+            .attr("class", "line line1")
+            .attr("d", line);
+
+        g.append("path")
+            .datum(data2)
+            .attr("class", "line line2")
+            .attr("d", line);
+
+        svg.append("text")
+            .attr("x", +svg.attr("width") / 2)
+            .attr("y", +svg.attr("height") - 40)
+            .attr("text-anchor", "middle")
+            .style("font-size", "20px")
+            .text("Day of the Week");
+
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -svg.attr("height") / 2)
+            .attr("y", 15)
+            .attr("text-anchor", "middle")
+            .style("font-size", "20px")
+            .text("Temperature (°F)");
+
+        const legend = svg.append("g")
+            .attr("transform", `translate(${svg.attr("width") / 2 - 60}, ${+svg.attr("height") - 10})`);
+
+        legend.append("line")
+            .attr("x1", 0)
+            .attr("y1", 0)
+            .attr("x2", 20)
+            .attr("y2", 0)
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 4);
+
+        legend.append("text")
+            .attr("x", 25)
+            .attr("y", 5)
+            .text("High Temp")
+            .style("font-size", "12px")
+            .attr("alignment-baseline", "middle");
+
+        legend.append("line")
+            .attr("x1", 100)
+            .attr("y1", 0)
+            .attr("x2", 120)
+            .attr("y2", 0)
+            .attr("stroke", "tomato")
+            .attr("stroke-width", 4);
+
+        legend.append("text")
+            .attr("x", 125)
+            .attr("y", 5)
+            .text("Low Temp")
+            .style("font-size", "12px")
+            .attr("alignment-baseline", "middle");
+
+    </script>
+  </body>
+</html>
+
